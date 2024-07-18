@@ -53,11 +53,13 @@
    export PYTHONPATH=$PYTHONPATH:$PWD
    ```
     
-   If you want to train a `CaMP` model, this can be easily done by running the command
+   If you want to train a `CaMP` model, this can be done by running the command
     
    ```
    allenact -s 23456 -o out -b . configs/proc10k_ObsNav/obstacles_nav_rgbd_proc.py
    ```
+
+   The `PPO+intent` model mentioned in the paper are also available in ivn_proc/models_baseline.py.
 
 ### Inference your model with AllenAct
 
