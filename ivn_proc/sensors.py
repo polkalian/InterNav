@@ -4,8 +4,8 @@ import gym, quaternion, torch
 import numpy as np
 import abc
 
-from ivn.environment import IThorEnvironment
-from interactive_navigation.tasks import ObjectPlacementTask
+from ivn_proc.environment import IThorEnvironment
+from ivn_proc.tasks import ObstaclesNavTask
 from allenact.embodiedai.sensors.vision_sensors import Sensor, RGBSensor, DepthSensor
 from allenact.base_abstractions.sensor import AbstractExpertSensor
 from allenact.base_abstractions.task import Task, SubTaskType
@@ -23,7 +23,7 @@ class RGBSensorThor(RGBSensor[IThorEnvironment, Task[IThorEnvironment]]):
     frame corresponding to the agent's egocentric view.
     """
 
-    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObjectPlacementTask]) -> np.ndarray:
+    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObstaclesNavTask]) -> np.ndarray:
         return env.current_frame.copy()
 
 
@@ -34,7 +34,7 @@ class LastRGBSensorThor(RGBSensor[IThorEnvironment, Task[IThorEnvironment]]):
     frame corresponding to the agent's egocentric view.
     """
 
-    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObjectPlacementTask]) -> np.ndarray:
+    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObstaclesNavTask]) -> np.ndarray:
         return env.last_frame.copy()
 
 
@@ -78,14 +78,14 @@ class GoalObjectTypeThorSensor(Sensor):
     def get_observation(
         self,
         env: IThorEnvironment,
-        task: Optional[ObjectPlacementTask],
+        task: Optional[ObstaclesNavTask],
         *args: Any,
         **kwargs: Any
     ) -> Any:
         return self.object_type_to_ind[task.task_info["object_type"]]
 
 
-class GPSCompassSensorIThor(Sensor[IThorEnvironment, ObjectPlacementTask]):
+class GPSCompassSensorIThor(Sensor[IThorEnvironment, ObstaclesNavTask]):
     def __init__(self, uuid: str = "target_coordinates_ind", **kwargs: Any):
         observation_space = gym.spaces.Box(
             low=np.finfo(np.float32).min,
@@ -147,7 +147,7 @@ class GPSCompassSensorIThor(Sensor[IThorEnvironment, ObjectPlacementTask]):
     def get_observation(
             self,
             env: IThorEnvironment,
-            task: Optional[ObjectPlacementTask],
+            task: Optional[ObstaclesNavTask],
             *args: Any,
             **kwargs: Any
     ) -> Any:
@@ -191,7 +191,7 @@ class DepthSensorIThor(DepthSensor[IThorEnvironment, Task[IThorEnvironment]]):
 
         super().__init__(**prepare_locals_for_super(locals()))
 
-    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObjectPlacementTask]) -> np.ndarray:
+    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObstaclesNavTask]) -> np.ndarray:
         return env.current_depth.copy()
 
 
@@ -221,7 +221,7 @@ class LastDepthSensorIThor(DepthSensor[IThorEnvironment, Task[IThorEnvironment]]
 
         super().__init__(**prepare_locals_for_super(locals()))
 
-    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObjectPlacementTask]) -> np.ndarray:
+    def frame_from_env(self, env: IThorEnvironment, task: Optional[ObstaclesNavTask]) -> np.ndarray:
         return env.last_depth.copy()
 
 
@@ -246,7 +246,7 @@ class FrameSensorThor(Sensor):
     def get_observation(
             self,
             env: IThorEnvironment,
-            task: Optional[ObjectPlacementTask],
+            task: Optional[ObstaclesNavTask],
             *args: Any,
             **kwargs: Any
     ) -> Any:
