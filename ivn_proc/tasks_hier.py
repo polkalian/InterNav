@@ -327,7 +327,7 @@ class ObstaclesNavTask(Task[IThorEnvironment]):
             dist2tget = self.last_geodesic_distance
 
         spl = self.spl()
-        sts = self.sel()
+        sts = self.sts()
 
         return {
             **super(ObstaclesNavTask, self).metrics(),
