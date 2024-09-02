@@ -59,7 +59,7 @@
    allenact -s 23456 -o out -b . configs/proc10k_ObsNav/obstacles_nav_rgbd_proc.py
    ```
 
-   The `PPO+intent` model mentioned in the paper are also available in ivn_proc/models_baseline.py.
+   The `PPO+intent` model mentioned in the paper are also available in ivn_proc/models_baseline.py (corresponding to the tasks.py).
 
 ### Inference your model with AllenAct
 
